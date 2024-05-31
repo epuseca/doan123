@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const middleware = { 
+const middleware = {
   verifyToken: async (req, res, next) => {
     try {
       const token = req.headers.cookie.split('token=')[1];

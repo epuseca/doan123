@@ -118,19 +118,27 @@ module.exports = {
     const user = await User.findOne({ username: username });
 
     if (!user) {
-        return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        return res.status(401).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'Invalid password' });
     }
 
     const token = jwt.sign({
-        id: user._id,
-        role: user.role,
-        username: user.username,
-    }, 'namdv', { expiresIn: '1h' }); 
+      id: user._id,
+      role: user.role,
+      username: user.username,
+      name: user.name,
+      mssv: user.mssv,
+      email: user.email,
+      address: user.address,
+      sex: user.sex,
+      khoa: user.khoa,
+      lop: user.lop,
+      idCtdt: user.idCtdt
+    }, 'namdv', { expiresIn: '1h' });
 
     res.cookie('token', token, { httpOnly: true });
     return res.status(200).json({ message: 'Login successful', token });

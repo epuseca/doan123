@@ -8,16 +8,18 @@ const ClassExam = require("../models/classExam")
 const classExam = require("../models/classExam")
 
 
-module.exports = { 
+module.exports = {
     getMain: async (req, res) => {
-        res.render('build/index.ejs')
-    }, 
+        res.render('build/index.ejs', {
+            user: req.user
+        });
+    },
     getStudentAPI: async (req, res) => {
         let results = await CTDT.find({});
         return res.render('build/pages/student_management', { listCTDT: results })
     },
     getStudentByCTDTAPI: async (req, res) => {
-        try { 
+        try {
             const page = parseInt(req.query.page) || 1;
             const limit = 6; // Số lượng item trên mỗi trang
             const skip = (page - 1) * limit;
@@ -37,24 +39,24 @@ module.exports = {
         const searchMSSV = req.query.mssv || '';
         try {
             // Tạo truy vấn tìm kiếm
-            const query = {role: 'student'};
+            const query = { role: 'student' };
             if (searchName) {
                 query.name = { $regex: searchName, $options: 'i' };
             }
             if (searchMSSV) {
                 query.mssv = { $regex: searchMSSV, $options: 'i' };
             }
-    
+
             // Phân trang
             const page = parseInt(req.query.page) || 1;
             const limit = 6;
             const skip = (page - 1) * limit;
-    
+
             // Lấy tài liệu khớp với phân trang
             const results = await User.find(query).skip(skip).limit(limit);
             const totalStudents = await User.countDocuments(query);
             const totalPages = Math.ceil(totalStudents / limit);
-    
+
             return res.render('build/pages/listStudent.ejs', {
                 listUserByCTDT: results,
                 searchQuery: { name: searchName, mssv: searchMSSV },
@@ -71,11 +73,11 @@ module.exports = {
             const page = parseInt(req.query.page) || 1;
             const limit = 5; // Số lượng item trên mỗi trang
             const skip = (page - 1) * limit;
-            
+
             const results = await CTDT.find({}).skip(skip).limit(limit);
             const totalCTDTs = await CTDT.countDocuments({});
             const totalPages = Math.ceil(totalCTDTs / limit);
-    
+
             return res.render('build/pages/department_management.ejs', {
                 listCTDT: results,
                 totalPages,
@@ -92,19 +94,19 @@ module.exports = {
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     },
-    
+
     searchCTDTByName: async (req, res) => {
         const searchQuery = req.query.name || '';
         const page = parseInt(req.query.page) || 1;
         const limit = 5;
         const skip = (page - 1) * limit;
-    
+
         try {
             const query = { name: { $regex: searchQuery, $options: 'i' } };
             const results = await CTDT.find(query).skip(skip).limit(limit);
             const totalCTDTs = await CTDT.countDocuments(query);
             const totalPages = Math.ceil(totalCTDTs / limit);
-    
+
             return res.render('build/pages/department_management.ejs', {
                 listCTDT: results,
                 searchQuery, // Truyền searchQuery vào view
@@ -121,7 +123,7 @@ module.exports = {
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     },
-    
+
     putEditCTDT: async (req, res) => {
         const id = req.params.id;
         const newData = req.body;
@@ -172,7 +174,7 @@ module.exports = {
         const page = parseInt(req.query.page) || 1;
         const limit = 10;
         const skip = (page - 1) * limit;
-    
+
         try {
             // Tìm giảng viên theo tên với phân trang
             const query = {
@@ -182,7 +184,7 @@ module.exports = {
             const results = await User.find(query).skip(skip).limit(limit);
             const totalTeachers = await User.countDocuments(query);
             const totalPages = Math.ceil(totalTeachers / limit);
-    
+
             return res.render('build/pages/listLeturer', {
                 listUserByCTDT: results,
                 searchQuery,

@@ -30,16 +30,67 @@ const { getMain, searchTeacher, searchStudentByName,
     getCourse, getTeachers, getStudentByCTDTAPI, getStudentAPI,
     getAllCTDT } = require('../controller/mainController')
 //Trang chủ
-routerAPI.get('/main', getMain)
+routerAPI.get('/main', middleware.verifyToken, getMain)
+//Login
+routerAPI.get('/', Login)
+routerAPI.post('/login', loginUser);
+routerAPI.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+});
+const User = require('../models/user');
+const CTDT = require('../models/ctdt');
+
+routerAPI.get('/profile', middleware.verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).populate('idCtdt').exec();
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Construct image path based on mssv and stored image filename
+        const imagePath = user.image ? `/img/avt/${user.image}` : '/img/avt/default.jpg';
+
+        res.render('build/pages/profile.ejs', {
+            user: user,
+            imagePath: imagePath
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
+// routerAPI.get('/profile', middleware.verifyToken, middleware.roleAdmin, async (req, res) => {
+//     return res.json({
+//         info: req.user
+//     });
+//     // res.render('build/index.ejs')
+// });
 //Khoa viện
-routerAPI.get('/ctdts', middleware.verifyToken, middleware.roleAdmin, getAllCTDT)
+routerAPI.get('/ctdts', middleware.verifyToken, getAllCTDT)
 routerAPI.get('/ctdtsSearchName', searchCTDTByName);
 routerAPI.put('/ctdts/:id', putEditCTDT); // PUT route to update data
 //Sinh viên/ giáo viên
-routerAPI.get('/students', middleware.verifyToken, middleware.roleStudent, getStudentAPI)
+routerAPI.get('/students', middleware.verifyToken, getStudentAPI)
 routerAPI.get('/students/ctdts', getStudentByCTDTAPI)
 routerAPI.get('/studentSearchName', searchStudentByName);
-routerAPI.get('/teachers', getTeachers)
+routerAPI.put('/students/:id', async (req, res) => {
+    const id = req.params.id;
+    const newData = req.body;
+
+    try {
+        const updatedData = await User.findByIdAndUpdate(id, newData, { new: true });
+        res.status(200).json(updatedData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+}),
+
+    routerAPI.get('/teachers', getTeachers)
 routerAPI.get('/teacherSearch', searchTeacher)
 
 //Khóa học
@@ -56,15 +107,8 @@ routerAPI.post('/ctdts', postNewCTDT);
 // Route để xử lý yêu cầu xóa dữ liệu dựa trên _id
 routerAPI.delete('/ctdts/:id', deleteACTDT);
 
-//Login
-routerAPI.get('/', Login)
-routerAPI.post('/login', loginUser);
-routerAPI.get('/profile', middleware.verifyToken, middleware.roleAdmin, async (req, res) => {
-    // return res.json({
-    //     info: req.user
-    // });
-    res.render('build/index.ejs')
-});
+
+
 
 //Điểm danh lớp thi
 const faceController = require('../controller/faceController');
