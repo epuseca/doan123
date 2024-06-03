@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <!-- Main Styling --> 
+    <!-- Main Styling -->
 
     <link href="../css/styles.css" rel="stylesheet" />
     <link href="../css/My_styles.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
             <ul class="flex flex-col pl-0 mb-0">
                 <li class="mt-0.5 w-full">
                     <a class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700"
-                        href="/main">
+                        href="/mainStudent">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="text-sm leading-normal text-blue-500 ni ni-shop"></i>
@@ -84,45 +84,11 @@
                             </span>
                         </a>
                         <div x-show="open" class="pl-7 mt-2">
-                            <div class="w-full">
-                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/ctdts">
-                                    <span
-                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
-                                        A </span>
-                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý
-                                        khoa</span>
-                                </a>
-                            </div>
-                            <div class="w-full">
-                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/students">
-                                    <span
-                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
-                                        L </span>
-
-                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý sinh
-                                        viên</span>
-                                </a>
-                            </div>
 
                             <div class="w-full">
 
                                 <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/teachers">
-
-                                    <span
-                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
-                                        D </span>
-
-                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý giảng
-                                        viên</span>
-                                </a>
-                            </div>
-                            <div class="w-full">
-
-                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap rounded-lg bg-transparent pr-4 font-semibold text-slate-800 shadow-none transition-colors  dark:text-white dark:opacity-100 "
-                                    href="/courses">
+                                    href="/coursesStudent">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
@@ -135,7 +101,7 @@
 
                             <div class="w-full">
                                 <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/class">
+                                    href="/classStudent">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
@@ -148,8 +114,8 @@
                             </div>
 
                             <div class="w-full">
-                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/classExams">
+                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap rounded-lg bg-transparent pr-4 font-semibold text-slate-800 shadow-none transition-colors  dark:text-white dark:opacity-100 "
+                                    href="/classExamsStudent">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
@@ -169,42 +135,29 @@
 
 
                 <li class="w-full mt-4">
-                    <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account
-                        pages</h6>
-                </li>
-
-                <li class="mt-0.5 w-full">
+                    <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account pages</h6>
+                  </li>
+                  <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="/profile">
-                        <div
-                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                            <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
-                        </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profile</span>
+                      href="/listClassStudent">
+                      <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
+                      </div>
+                      <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Thời Khóa Biểu</span>
                     </a>
-                </li>
-
-                <li class="mt-0.5 w-full">
+                  </li>
+          
+                  <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="./pages/sign-in.html">
-                        <div
-                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                            <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-single-copy-04"></i>
-                        </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign In</span>
+                      href="/profile">
+                      <div
+                        class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                        <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
+                      </div>
+                      <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profile</span>
                     </a>
-                </li>
-
-                <li class="mt-0.5 w-full">
-                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="./pages/sign-up.html">
-                        <div
-                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
-                            <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
-                        </div>
-                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
-                    </a>
-                </li>
+                  </li>
             </ul>
         </div>
     </aside>
@@ -223,9 +176,9 @@
                             <a class="text-white opacity-50" href="javascript:;">Main</a>
                         </li>
                         <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                            aria-current="page">Courses</li>
+                            aria-current="page">Class Exams</li>
                     </ol>
-                    <h6 class="mb-0 font-bold text-white capitalize">Courses</h6>
+                    <h6 class="mb-0 font-bold text-white capitalize">Class Exams</h6>
                 </nav>
 
                 <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
@@ -245,33 +198,34 @@
                         <!-- <li class="flex items-center">
                       <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
                     </li> -->
-                    <li class="flex items-center">
-                        <a href="/" id="logoutLink" class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
-                          <i class="fa fa-user sm:mr-1"></i>
-                          <span class="hidden sm:inline">Logout</span>
-                        </a>
-                      </li>
-                      <script>
-                        document.getElementById('logoutLink').addEventListener('click', async function (event) {
-                          event.preventDefault();
-                      
-                          try {
-                            const response = await fetch('/logout', {
-                              method: 'GET',
-                              credentials: 'same-origin'
+                        <li class="flex items-center">
+                            <a href="/" id="logoutLink"
+                                class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
+                                <i class="fa fa-user sm:mr-1"></i>
+                                <span class="hidden sm:inline">Logout</span>
+                            </a>
+                        </li>
+                        <script>
+                            document.getElementById('logoutLink').addEventListener('click', async function (event) {
+                                event.preventDefault();
+
+                                try {
+                                    const response = await fetch('/logout', {
+                                        method: 'GET',
+                                        credentials: 'same-origin'
+                                    });
+
+                                    if (response.ok) {
+                                        window.location.href = '/';
+                                    } else {
+                                        alert('Failed to log out. Please try again.');
+                                    }
+                                } catch (error) {
+                                    console.error('Error during logout:', error);
+                                    alert('An error occurred during logout. Please try again.');
+                                }
                             });
-                      
-                            if (response.ok) {
-                              window.location.href = '/';
-                            } else {
-                              alert('Failed to log out. Please try again.');
-                            }
-                          } catch (error) {
-                            console.error('Error during logout:', error);
-                            alert('An error occurred during logout. Please try again.');
-                          }
-                        });
-                      </script>
+                        </script>
                         <li class="flex items-center pl-4 xl:hidden">
                             <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand"
                                 sidenav-trigger>
@@ -395,121 +349,20 @@
                         class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
                         <div
                             class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex items-center justify-between">
-                            <h6 class="dark:text-white">Danh sách học phần</h6>
-                            <button type="button"
-                                class="inline-flex items-center px-2 py-3 font-bold text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-blue-500 to-violet-500 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                onclick="showDialog_add()">
-                                <img src="../img/ic/ic_add.svg" class="w-5 h-5 mr-1 text-white" alt="Icon">
-                                <span>Thêm mới</span>
-                            </button>
+                            <h6 class="dark:text-white">Danh sách lớp thi</h6>
+
                         </div>
 
 
 
-
-
                         <div class="flex flex-wrap">
+                            
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <div>
-
-                                    <div class="relative group">
-                                        <button id="dropdown-button"
-                                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                                            <span class="flex items-center">
-                                                <span class="mr-auto">Tìm theo Khoa/Viện</span>
-                                                <span>
-                                                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </span>
-                                            </span>
-
-                                        </button>
-                                        <div id="dropdown-menu"
-                                            class="hidden focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease  w-full h-50 appearance-none border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none absolute right-0 mt-2 rounded-1.4 shadow-lg bg-white p-2 z-30 overflow-y-auto">
-                                            <!-- Search input -->
-                                            <!-- Dropdown content goes here -->
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">All</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">Trường
-                                                Điện Điện tử</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">Trường
-                                                Cơ khí</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">Viện
-                                                Toán học</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">Viện
-                                                Vật lý</a>
-                                            <a href="#"
-                                                class="block px-4 py-2 text-gray-700 hover:bg-gray-200 active:bg-blue-100 cursor-pointer rounded-md">Viện
-                                                ngoại ngữ</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script src="../js/alpine.js" async></script>
-                                <script>
-                                    // JavaScript to toggle the dropdown
-                                    const dropdownButton = document.getElementById('dropdown-button');
-                                    const dropdownMenu = document.getElementById('dropdown-menu');
-                                    let isOpen = true; // Set to true to open the dropdown by default
-
-                                    // Function to toggle the dropdown state
-                                    function toggleDropdown() {
-                                        isOpen = !isOpen;
-                                        dropdownMenu.classList.toggle('hidden', !isOpen);
-                                    }
-
-                                    // Set initial state
-                                    toggleDropdown();
-
-                                    dropdownButton.addEventListener('click', () => {
-                                        toggleDropdown();
-                                    });
-
-                                    document.addEventListener('click', function (event) {
-                                        const dropdownButton = document.getElementById('dropdown-button');
-                                        const dropdownMenu = document.getElementById('dropdown-menu');
-                                        const isClickInsideDropdown = dropdownButton.contains(event.target) || dropdownMenu.contains(event.target);
-
-                                        if (!isClickInsideDropdown) {
-                                            // Đóng dropdown nếu click ra bên ngoài
-                                            dropdownMenu.classList.add('hidden');
-                                            if (isOpen) {
-                                                isOpen = false;
-
-                                            }
-
-
-                                        }
-                                    });
-                                    /*
-                                      document.addEventListener('scroll', function(event) {
-                                        const dropdownMenu = document.getElementById('dropdown-menu');
-    
-                                        // Đóng dropdown khi cuộn trang
-                                        dropdownMenu.classList.add('hidden');
-                                    });
-    
-                                     */
-
-                                </script>
-
-                            </div>
-
-                            <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <input type="text" placeholder="Tìm theo mã học phần"
+                                <input type="text" placeholder="Tìm theo mã lớp thi"
                                     class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
                             </div>
 
-                            <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <input type="text" placeholder="Tìm theo tên học phần"
-                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
-                            </div>
+                            
 
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
                                 <div class="flex flex-row">
@@ -535,43 +388,55 @@
                                         <tr>
                                             <th
                                                 class="px-5 py-3 w-30 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Mã học phần</th>
+                                                Mã lớp học</th>
+                                            <th
+                                                class="px-5 py-3 w-30 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                                                Mã lớp thi</th>
                                             <th
                                                 class="px-6 py-3 w-50 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Tên học phần </th>
+                                                Tên lớp học </th>
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Thời lượng</th>
+                                                Giám thị coi thi</th>
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-normal  text-slate-400 opacity-70">
-                                                Số tín chỉ</th>
+                                                Ngày thi</th>
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-normal  text-slate-400 opacity-70">
-                                                Loại học phần</th>
+                                                Kíp thi</th>
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-normal  text-slate-400 opacity-70">
-                                                Học kỳ</th>
+                                                Phòng thi</th>
+                                            <th
+                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-normal  text-slate-400 opacity-70">
+                                                Điểm danh/ Tổng sinh viên</th>
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Thao tác</th>
+                                                Xem danh sách lớp</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% let counter=1; listCourse.forEach(function(course){ %>
+                                        <% let counter=1; listClassExam.forEach(function(classExams){ %>
                                             <tr>
                                                 <td
                                                     class="px-6 py-3 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                     <h6
                                                         class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= course.maHocPhan %>
+                                                        <%= classExams.classId.malop %>
                                                     </h6>
                                                 </td>
-
                                                 <td
                                                     class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 shadow-transparent">
                                                     <h6
                                                         class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= course.name %>
+                                                        <%= classExams._id %>
+                                                    </h6>
+                                                </td>
+                                                <td
+                                                    class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 shadow-transparent">
+                                                    <h6
+                                                        class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
+                                                        <%= classExams.classId.name %>
                                                     </h6>
                                                 </td>
 
@@ -579,57 +444,51 @@
                                                     class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
                                                     <h6
                                                         class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        2(2-1-0-4)</h6>
+                                                        <%= classExams.teacherId.name %>
+                                                    </h6>
                                                 </td>
 
                                                 <td
                                                     class="p-2 pr-6  align-middle bg-transparent border-b dark:border-white/40 whitespace-normal shadow-transparent">
                                                     <h6
                                                         class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= course.tinChi %>
+                                                        <%= classExams.ngayThi %>
                                                     </h6>
                                                 </td>
                                                 <td
                                                     class="p-2 pr-6  align-middle bg-transparent border-b dark:border-white/40 whitespace-normal shadow-transparent">
                                                     <h6
                                                         class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= course.description %>
+                                                        <%= classExams.kipThi %>
                                                     </h6>
                                                 </td>
                                                 <td
                                                     class="p-2 pr-6  align-middle bg-transparent border-b dark:border-white/40 shadow-transparent w-40">
                                                     <h6
                                                         class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= course.hocKy %>
+                                                        <%= classExams.phongThi %>
+                                                    </h6>
+                                                </td>
+                                                <td
+                                                    class="p-2 pr-6  align-middle bg-transparent border-b dark:border-white/40 shadow-transparent w-40">
+                                                    <h6
+                                                        class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
+                                                        <%= classExams.idStudentsDiemDanh.length %>/ <%=
+                                                                classExams.idStudents.length %>
                                                     </h6>
                                                 </td>
 
                                                 <td
                                                     class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-normal shadow-transparent">
                                                     <div class="flex">
-                                                        <button type="button"
-                                                            class="px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="window.location.href='/courses/<%=course.id %>'">
-                                                            <img src="../img/ic/ic_search.svg" class="w-4 h-4"
-                                                                alt="Icon">
-                                                        </button>
+
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_view('<%= course.maHocPhan %>','<%= course.name %>','<%= course.description %>','<%= course.tinChi %>')">
+                                                            onclick="window.location.href='/classExamsStudentsS/<%=classExams.id %>'">
                                                             <img src="../img/ic/ic_visibility.svg" class="w-4 h-4"
                                                                 alt="Icon">
                                                         </button>
-                                                        <button type="button"
-                                                            class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_edit()">
-                                                            <img src="../img/ic/ic_edit.svg" class="w-4 h-4" alt="Icon">
-                                                        </button>
-                                                        <button type="button"
-                                                            class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_delete()">
-                                                            <img src="../img/ic/ic_delete.svg" class="w-4 h-4"
-                                                                alt="Icon">
-                                                        </button>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -688,7 +547,7 @@
                         <div class="relative">
                             <div aria-expanded="false"
                                 class="bg-gray-200 relative flex items-center justify-between focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                                <span>Viện Điện tử Viễn thông</span>
+                                <span>Khoa viện</span>
                                 <span class="absolute inset-y-0 right-0 flex items-center pr-3">
                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -705,7 +564,7 @@
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                             Tên học phần</label>
-                        <input value="Môn học viện điện tử viễn thông" type="text" id="name" readonly
+                        <input value="Môn học viện điện tử viễn thông" type="email" name="email" readonly
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
@@ -713,15 +572,15 @@
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                             Mã học phần (*)</label>
-                        <input value="ET1234" readonly type="text" id="mahocphan"
+                        <input value="ET1234" readonly type="text" name="first name"
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Loại học phần</label>
-                        <input value="" readonly type="text" id="description"
+                            Học phần điều kiện</label>
+                        <input value="" readonly type="text" name="last name"
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
@@ -729,33 +588,58 @@
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                             Số tín chỉ</label>
-                        <input value="3" readonly type="text" id="tinchi"
+                        <input value="3" readonly type="text" name="last name"
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
             </div>
 
 
-            
+            <div class="flex flex-wrap -mx-3 px-6">
+                <div class="w-full max-w-full px-3 shrink-0  md:w-1/4 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
+                            Số giờ LT</label>
+                        <input type="text" value="2" readonly
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
+                            Số giờ BT</label>
+                        <input type="text" value="1" readonly
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
+                            Số giờ TN/TH</label>
+                        <input type="text" value="0" readonly
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
+                            Số giờ tự học</label>
+                        <input type="text" value="4" readonly
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
     <script>
-        function showDialog_view(maHocPhan, name, description, tinchi) {
+        function showDialog_view() {
             let dialog = document.getElementById("dialog_view");
-    
-            // Populate the dialog with course information
-            document.getElementById("mahocphan").value = maHocPhan;
-            document.getElementById("name").value = name;
-            document.getElementById("description").value = description;
-            document.getElementById("tinchi").value = tinchi;
-
-            dialog.classList.remove('hidden');
+            dialog.classList.remove('hidden')
         }
-    
         function hideDialog_view() {
             let dialog = document.getElementById("dialog_view");
-            dialog.classList.add('hidden');
+            dialog.classList.add('hidden')
         }
     </script>
 

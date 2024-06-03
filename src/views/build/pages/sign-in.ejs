@@ -22,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="apple-touch-icon" sizes="76x76" href="../img/apple-icon.png" />
   <link rel="icon" type="image/png" href="../img/favicon.png" />
-  <title>Argon Dashboard 2 Tailwind by Creative Tim</title>
+  <title>Login</title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Font Awesome Icons -->
@@ -167,7 +167,16 @@
                           // Assuming the role is returned in the token payload
                           if (result.token) {
                             document.cookie = `token=${result.token}; path=/;`;
-                            window.location.href = '/main';
+
+                            // Decode the JWT token to check the user's role
+                            const decodedToken = JSON.parse(atob(result.token.split('.')[1]));
+                            const userRole = decodedToken.role;
+
+                            if (userRole === 'student') {
+                              window.location.href = '/mainStudent';
+                            } else {
+                              window.location.href = '/main';
+                            }
                           }
                         } else {
                           alert(result.message);

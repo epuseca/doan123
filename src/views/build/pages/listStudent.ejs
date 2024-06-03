@@ -409,9 +409,6 @@
                         </div>
 
 
-
-
-
                         <div class="flex flex-wrap">
                             <div id="search-input"
                                 class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
@@ -530,18 +527,18 @@
                                                     <div class="flex">
                                                         <button type="button"
                                                             class="px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_view('<%= user.mssv %>', '<%= user.name %>','<%= user.sex %>', '<%= user.username %>','/img/avt/<%= user.image %>')">
+                                                            onclick="showDialog_view('<%= user.mssv %>','<%= user.phone %>','<%= user.name %>','<%= user.khoa %>','<%= user.sex %>', '<%= user.username %>','/img/avt/<%= user.image %>')">
                                                             <img src="../img/ic/ic_visibility.svg" class="w-4 h-4"
                                                                 alt="Icon">
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_edit('<%= user.mssv %>', '<%= user.name %>','<%= user.sex %>', '<%= user.username %>', '<%= user._id %>')">
+                                                            onclick="showDialog_edit('<%= user.mssv %>','<%= user.phone %>', '<%= user.name %>','<%= user.sex %>', '<%= user.username %>', '<%= user._id %>','/img/avt/<%= user.image %>')">
                                                             <img src="../img/ic/ic_edit.svg" class="w-4 h-4" alt="Icon">
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_delete()">
+                                                            onclick="showDialog_delete('<%= user._id %>')">
                                                             <img src="../img/ic/ic_delete.svg" class="w-4 h-4"
                                                                 alt="Icon">
                                                         </button>
@@ -681,7 +678,7 @@
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 SĐT</label>
-                            <input value="0123456789" type="text" readonly
+                            <input id="phone" value="" type="text" readonly
                                 class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -700,8 +697,8 @@
                     <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Năm vào trường</label>
-                            <input value="2019" type="text" readonly
+                                Khóa học</label>
+                            <input id="studentKhoa" value="" type="text" readonly
                                 class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -762,17 +759,15 @@
 
                 </div>
             </div>
-
-
-
-
         </div>
     </div>
     <script>
-        function showDialog_view(mssv, name, sex, email, image) {
+        function showDialog_view(mssv, phone, name, khoa, sex, email, image) {
             document.getElementById('studentImage').src = image;
             document.getElementById('studentMSSV').value = mssv;
+            document.getElementById('phone').value = phone;
             document.getElementById('studentName').value = name;
+            document.getElementById('studentKhoa').value = khoa;
             document.getElementById('studentSex').value = sex;
             document.getElementById('studentEmail').value = email;
             document.getElementById('dialog_view').classList.remove('hidden');
@@ -810,13 +805,14 @@
             <div class="flex flex-wrap">
                 <div class="">
                     <div class="mx-6 mt-6 w-75 h-75 border-1 rounded-1.8 border-gray-300">
-                        <img class="w-50 h-75 rounded" src="../img/marie.jpg" alt="">
+                        <img id="studentImage2" class="w-50 h-75 rounded" src="" alt="Student Image">
                     </div>
+
                     <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 Mã số sinh viên</label>
-                            <input name="mssv" value="20202020" type="text"
+                            <input name="mssv" value="" type="text"
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -825,7 +821,7 @@
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 SĐT</label>
-                            <input value="0123456789" type="text"
+                            <input name="phone" value="" type="text"
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -844,8 +840,8 @@
                     <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Năm vào trường</label>
-                            <input value="2020" type="text"
+                                Khoa</label>
+                            <input value="65" type="text"
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -854,7 +850,7 @@
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 Bậc đào tạo</label>
-                            <input value="Đại học đại trà" type="text"
+                            <input value="Đại học đại trà" type="text" readonly
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -872,7 +868,7 @@
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 Khoa viện quản lý</label>
-                            <input value="Trường Điện - Điện tử" type="text"
+                            <input value="Trường Điện - Điện tử" type="text" readonly
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
@@ -899,17 +895,15 @@
                         <div class="">
                             <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                                 Email</label>
-                            <input name="username" value="a.nv202020@gmail.com" type="text"
+                            <input name="username" value="" type="text"
                                 class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                         </div>
                     </div>
-                    <input name="id" type="hidden" value="">
-
                 </div>
             </div>
+            <input name="id" type="hidden" value="">
 
-            <hr
-                class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
+
             <button id="button_edit"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
                 Thay đổi
@@ -917,7 +911,9 @@
             <script>
                 document.getElementById('button_edit').addEventListener('click', async function () {
                     const id = document.querySelector("#dialog_edit input[name='id']").value;
+                    // const newImage = document.querySelector("#dialog_edit input[name='studentImage']").value;
                     const newMssv = document.querySelector("#dialog_edit input[name='mssv']").value;
+                    const newPhone = document.querySelector("#dialog_edit input[name='phone']").value;
                     const newName = document.querySelector("#dialog_edit input[name='name']").value;
                     const newSex = document.querySelector("#dialog_edit input[name='sex']").value;
                     const newUsername = document.querySelector("#dialog_edit input[name='username']").value;
@@ -929,10 +925,12 @@
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
+                                // image: newImage,
                                 mssv: newMssv,
+                                phone: newPhone,
                                 name: newName,
                                 sex: newSex,
-                                username: newUsername,
+                                username: newUsername
                             })
                         });
 
@@ -949,51 +947,136 @@
                         console.error('Error:', error);
                     }
                 });
-
             </script>
             <button id="button_add"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
                 Thêm mới
             </button>
-
-
+            <div id="dialog_edit" class="hidden">
+                <!-- <input type="text" name="studentImage" placeholder="Image"> -->
+                <input type="text" name="mssv">
+                <input type="text" name="phone">
+                <input type="text" name="name">
+                <input type="text" name="username">
+                <input type="text" name="sex">
+                <input type="hidden" name="id">
+                <button id="button_edit" class="hidden">Chỉnh sửa</button>
+                <!-- <button id="button_add" class="hidden">Thêm mới</button> -->
+            </div>
         </div>
     </div>
+
     <script>
-        function showDialog_edit(mssv, name, sex, username, id) {
+        let isAddButtonEventBound = false;
+
+        function showDialog_edit(mssv, phone, name, sex, username, id, image) {
             let dialog = document.getElementById("dialog_edit");
             dialog.classList.remove('hidden');
 
-            // Lấy các input trong hộp thoại
+            // Get the input elements in the dialog
             let mssvInput = document.querySelector("#dialog_edit input[name='mssv']");
+            let phoneInput = document.querySelector("#dialog_edit input[name='phone']");
             let nameInput = document.querySelector("#dialog_edit input[name='name']");
             let sexInput = document.querySelector("#dialog_edit input[name='sex']");
             let usernameInput = document.querySelector("#dialog_edit input[name='username']");
             let idInput = document.querySelector("#dialog_edit input[name='id']");
+            let imageElement = document.getElementById("studentImage2");
 
-            // Điền dữ liệu vào input
+            // Fill in the input fields with data
             mssvInput.value = mssv;
+            phoneInput.value = phone;
             nameInput.value = name;
             sexInput.value = sex;
             usernameInput.value = username;
             idInput.value = id;
+            imageElement.src = image;
 
+            // Display the edit button and hide the add button
+            document.getElementById("button_edit").classList.remove('hidden');
+            document.getElementById("button_add").classList.add('hidden');
         }
+
         function hideDialog_edit() {
             let dialog = document.getElementById("dialog_edit");
-            dialog.classList.add('hidden')
+            dialog.classList.add('hidden');
         }
+
+
         function showDialog_add() {
             let dialog = document.getElementById("dialog_edit");
-            dialog.classList.remove('hidden')
-            document.getElementById("button_edit").classList.add('hidden')
-            document.getElementById("button_add").classList.remove('hidden')
+            dialog.classList.remove('hidden');
+
+            // Reset các giá trị input
+            // document.querySelector("#dialog_edit input[name='studentImage']").value = "";
+            document.querySelector("#dialog_edit input[name='mssv']").value = "";
+            document.querySelector("#dialog_edit input[name='phone']").value = "";
+            document.querySelector("#dialog_edit input[name='name']").value = "";
+            document.querySelector("#dialog_edit input[name='sex']").value = "";
+            document.querySelector("#dialog_edit input[name='username']").value = "";
+            document.querySelector("#dialog_edit input[name='id']").value = "";
+
+            // Hiển thị nút thêm mới và ẩn nút chỉnh sửa
+            document.getElementById("button_edit").classList.add('hidden');
+            document.getElementById("button_add").classList.remove('hidden');
+
+
+            // Gán sự kiện click cho nút "Thêm mới" nếu chưa được gán
+            if (!isAddButtonEventBound) {
+                document.getElementById("button_add").addEventListener('click', addNewData);
+                isAddButtonEventBound = true;
+            }
         }
-        function hideDialog_edit() {
-            let dialog = document.getElementById("dialog_edit");
-            dialog.classList.add('hidden')
+
+
+
+
+        function addNewData() {
+            console.log("addNewData function called");
+            // const newImage = document.querySelector("#dialog_edit input[name='studentImage']").value;
+            const newMssv = document.querySelector("#dialog_edit input[name='mssv']").value;
+            const newPhone = document.querySelector("#dialog_edit input[name='phone']").value;
+            const newName = document.querySelector("#dialog_edit input[name='name']").value;
+            const newSex = document.querySelector("#dialog_edit input[name='sex']").value;
+            const newUsername = document.querySelector("#dialog_edit input[name='username']").value;
+            // const newPassword = document.querySelector("#dialog_edit input[name='password']").value;  // Lấy giá trị password
+            try {
+                // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
+                const response = fetch('/student', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        // image: newImage,
+                        mssv: newMssv,
+                        phone: newPhone,
+                        name: newName,
+                        sex: newSex,
+                        username: newUsername,
+                        // password: newPassword
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Nếu thêm mới thành công, làm gì đó (ví dụ: ẩn hộp thoại)
+                            hideDialog_edit();
+                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
+                            window.location.reload();
+                        } else {
+                            // Xử lý khi không thêm mới được dữ liệu
+                            console.error('Failed to add new data');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
+
+
     </script>
+
+
 
     <div id="dialog_delete" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
             hidden z-50">
@@ -1024,21 +1107,49 @@
                     Bạn có chắc chắn xóa sinh viên này không ?
                 </h6>
             </div>
-
-            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
+            <input name="deleteId" type="hidden" value="">
+            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                onclick="deleteData()">
                 Xóa
             </button>
-
-
-
-
         </div>
     </div>
+
     <script>
-        function showDialog_delete() {
-            let dialog = document.getElementById("dialog_delete");
-            dialog.classList.remove('hidden')
+        function deleteData() {
+            const id = document.querySelector("#dialog_delete input[name='deleteId']").value;
+
+            try {
+                // Gửi yêu cầu xóa dữ liệu đến máy chủ
+                fetch(`/student/${id}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Nếu xóa thành công, làm gì đó (ví dụ: ẩn hộp thoại)
+                            hideDialog_delete();
+                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
+                            window.location.reload();
+                        } else {
+                            // Xử lý khi không xóa được dữ liệu
+                            console.error('Failed to delete data');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
+    </script>
+    <script>
+        function showDialog_delete(id) {
+            let dialog = document.getElementById("dialog_delete");
+            dialog.classList.remove('hidden');
+
+            // Truyền ID vào input ẩn trong hộp thoại xóa
+            document.querySelector("#dialog_delete input[name='deleteId']").value = id;
+        }
+
         function hideDialog_delete() {
             let dialog = document.getElementById("dialog_delete");
             dialog.classList.add('hidden')

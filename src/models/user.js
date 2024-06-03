@@ -10,14 +10,14 @@ const userSchema = new mongoose.Schema({
   sex: { type: String, enum: ["male", "female"], required: true, default: 'male' },
   role: { type: String, enum: ["admin", "teacher", "student"], required: true },
   username: { type: String, required: true },
-  password: { type: String, required: true },
+  password: { type: String, required: true, default: '123456' },
   khoa: String, //64
   lop: String, //Điện tử 06
   idCtdt: { type: mongoose.Schema.Types.ObjectId, ref: 'CTDT' },
   image: { type: String, required: false },
   description: Array,
 });
- 
+
 userSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 userSchema.pre('save', async function (next) {
