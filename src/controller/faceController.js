@@ -19,9 +19,8 @@ async function getDescriptorsFromDB(image) {
     }
 
     const labeledFaceDescriptors = users.map(user => {
-      // const userName = user.name;
       const descriptions = user.description.map(desc => new Float32Array(Object.values(desc)));
-      return new faceapi.LabeledFaceDescriptors(user._id.toString(), descriptions); // Sử dụng user._id làm label
+      return new faceapi.LabeledFaceDescriptors(user._id.toString(), descriptions);
     });
 
     const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.45);
@@ -35,12 +34,63 @@ async function getDescriptorsFromDB(image) {
 
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+
     return results;
   } catch (error) {
     console.error("Error in getDescriptorsFromDB:", error.message);
     throw error;
   }
 }
+
+exports.checkFaceByClassExam = async (req, res) => {
+  try {
+    const { File1 } = req.files;
+    const { idClassExam } = req.params;
+
+    if (!File1) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const classExam = await ClassExam.findById(idClassExam);
+    if (!classExam) {
+      return res.status(404).json({ message: "Class exam not found" });
+    }
+
+    const results = await getDescriptorsFromDB(File1.tempFilePath);
+    console.log("Number of faces detected:", results.length); // In ra số lượng khuôn mặt được phát hiện
+
+    const recognizedUsers = [];
+    let unrecognizedCount = 0;
+
+    for (const matchedUser of results) {
+      if (matchedUser.label !== 'unknown') {
+        const userId = mongoose.Types.ObjectId(matchedUser.label);
+        if (!classExam.idStudentsDiemDanh.includes(userId)) {
+          classExam.idStudentsDiemDanh.push(userId);
+        }
+        const user = await User.findById(userId);
+        recognizedUsers.push({
+          name: user.name,
+          mssv: user.mssv,
+          distance: matchedUser.distance,
+          recognized: true
+        });
+      } else {
+        unrecognizedCount++;
+      }
+    }
+
+    await classExam.save();
+    console.log("Recognized Users: ", recognizedUsers); // Thêm dòng này để kiểm tra dữ liệu
+
+    res.json({ recognizedUsers, unrecognizedCount });
+  } catch (error) {
+    console.error("Error in checkFaceByClassExam:", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 
 async function uploadLabeledImages(images, userId) {
   try {
@@ -105,39 +155,8 @@ exports.checkFace = async (req, res) => {
   }
 };
 
-exports.checkFaceByClassExam = async (req, res) => {
-  try {
-    const { File1 } = req.files;
-    const { idClassExam } = req.params;
 
-    if (!File1) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
 
-    const classExam = await ClassExam.findById(idClassExam);
-    if (!classExam) {
-      return res.status(404).json({ message: "Class exam not found" });
-    }
-
-    const result = await getDescriptorsFromDB(File1.tempFilePath);
-    const matchedUser = result[0];
-    // console.log("resultCon:", result[0]._label)
-
-    if (matchedUser.label !== 'unknown') {
-      const userId = mongoose.Types.ObjectId(matchedUser.label); // Chuyển đổi label thành ObjectId
-      if (!classExam.idStudentsDiemDanh.includes(userId)) {
-        classExam.idStudentsDiemDanh.push(userId);
-        await classExam.save();
-      }
-      // res.json({ message: "Attendance recorded successfully", matchedUser });
-    }
-    res.json({ result });
-
-  } catch (error) {
-    console.error("Error in checkFaceByClassExam:", error.message);
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
 
 exports.renderForm = async (req, res) => {
   try {

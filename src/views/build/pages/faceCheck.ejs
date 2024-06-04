@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -124,6 +125,7 @@
     <div class="notifications"></div>
     <div class="container">
         <h1>Face Recognition System</h1>
+        
         <button class="back-button" onclick="window.location.href='/classExams'"><i
                 class="fas fa-arrow-left"></i></button>
 
@@ -145,24 +147,14 @@
         </div>
         <!-- Spinner element -->
         <div id="spinner" class="spinner"></div>
-        <!-- Result section to display recognized person -->
+        <!-- Result section to display recognized persons -->
         <div id="resultSection" style="display: none;">
-            <p id="recognizedPerson"></p>
-            <p id="recognizedDistance"></p>
+            <h2>Recognized Persons</h2>
+            <div id="recognizedPersonsList"></div>
+            <div id="unrecognizedCount"></div>
         </div>
     </div>
 
-    <!-- add face for training -->
-    <!-- <div class="form-section">
-        <h2>Add Face for Training</h2>
-        <form action="/post-face" method="post" encType="multipart/form-data">
-            <input type="text" name="label" placeholder="Label" required />
-            <input type="file" name="File1" required />
-            <input type="submit" value="Add Face" />
-        </form>
-    </div> -->
-    </div>
-    <!-- JavaScript code -->
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
@@ -174,6 +166,8 @@
         const uploadForm = document.getElementById('uploadForm');
         const toggleCameraButton = document.getElementById('toggleCamera');
         const spinner = document.getElementById('spinner');
+        const recognizedPersonsList = document.getElementById('recognizedPersonsList');
+        const unrecognizedCountDiv = document.getElementById('unrecognizedCount');
 
         let stream = null;
 
@@ -197,7 +191,6 @@
             }
         }
 
-        // Capture a photo
         captureButton.addEventListener('click', () => {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             photo.src = canvas.toDataURL('image/jpeg');
@@ -207,7 +200,6 @@
             captureButton.style.display = 'none';
             retakeButton.style.display = 'inline-block';
 
-            // Create a file from the captured image and add it to the file input
             canvas.toBlob(blob => {
                 const capturedFile = new File([blob], "captured_image.jpeg", { type: "image/jpeg" });
                 const dataTransfer = new DataTransfer();
@@ -216,7 +208,6 @@
             });
         });
 
-        // Retake photo
         retakeButton.addEventListener('click', () => {
             video.style.display = 'block';
             canvas.style.display = 'none';
@@ -225,7 +216,6 @@
             retakeButton.style.display = 'none';
         });
 
-        // Toggle camera
         toggleCameraButton.addEventListener('click', () => {
             if (stream) {
                 stopCamera();
@@ -234,18 +224,13 @@
             }
         });
 
-        // Process the form submission
         uploadForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
-            // Show spinner
             spinner.style.display = 'block';
 
-            // Get the form data
             const formData = new FormData(uploadForm);
 
-
-            // Send the form data to the server using fetch API
             try {
                 const response = await fetch("/check-face/<%=idClassExam%>", {
                     method: "POST",
@@ -254,13 +239,9 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    // Update the recognized person information
-                    // if (data.result[0]._label == 'unknown') {
-                        // noPersonRecognizedPerson(result)
-                    // }
-                    // else{
-                        updateRecognizedPerson(data.result);
-                    // }
+                    console.log("Data received: ", data); // Thêm dòng này để kiểm tra dữ liệu nhận được
+
+                    updateRecognizedPersonsList(data.recognizedUsers, data.unrecognizedCount);
                 } else {
                     console.error("Error:", response.statusText);
                 }
@@ -268,88 +249,37 @@
                 console.error("Error:", error);
             }
 
-            // Hide spinner
             spinner.style.display = 'none';
         });
-        async function noPersonRecognizedPerson(result) {
-            const resultSection = document.getElementById('resultSection');
-            const recognizedPerson = document.getElementById('recognizedPerson');
-            const recognizedDistance = document.getElementById('recognizedDistance');
 
+        async function updateRecognizedPersonsList(recognizedUsers, unrecognizedCount) {
+            recognizedPersonsList.innerHTML = '';
 
-            recognizedPerson.textContent = "No person recognized.";
-            recognizedDistance.textContent = "";
-            resultSection.style.display = 'block';
-            // Check if result is not empty
-            // if (result && result.length > 0) {
-            //     const recognizedUserId = result[0]._label;
-
-            //     try {
-            //         // Fetch user name based on recognizedUserId from the server
-            //         const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
-            //         if (response.ok) {
-            //             const data = await response.json();
-            //             const recognizedName = data.name;
-            //             const recognizedDist = result[0]._distance;
-            //             recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
-            //             recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
-            //             resultSection.style.display = 'block';
-            //         } else {
-            //             console.error("Error:", response.statusText);
-            //         }
-            //     } catch (error) {
-            //         console.error("Error:", error);
-            //     }
-            // } else {
-            //     recognizedPerson.textContent = "No person recognized.";
-            //     recognizedDistance.textContent = "";
-            //     resultSection.style.display = 'block';
-            // }
-        }
-        // Function to update recognized person information
-        // Function to update recognized person information
-        async function updateRecognizedPerson(result) {
-            const resultSection = document.getElementById('resultSection');
-            const recognizedPerson = document.getElementById('recognizedPerson');
-            const recognizedDistance = document.getElementById('recognizedDistance');
-
-            if(result[0]._label == 'unknown'){
-                recognizedPerson.textContent = "Không nhận diện được sinh viên";
-                recognizedDistance.textContent = '';
-                resultSection.style.display = 'block';
-            }
-            // Check if result is not empty
-            else if (result && result.length > 0) {
-                const recognizedUserId = result[0]._label;
-
-                try {
-                    // Fetch user name based on recognizedUserId from the server
-                    const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        const recognizedName = data.name;
-                        const recognizedDist = result[0]._distance;
-                        recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
-                        recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
-                        resultSection.style.display = 'block';
-                    } else {
-                        console.error("Error:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
+            recognizedUsers.forEach(user => {
+                const userElement = document.createElement('div');
+                if (user.recognized) {
+                    userElement.innerHTML = `<p>Điểm danh thành công: ${user.name} (MSSV: ${user.mssv}) - Distance: ${user.distance}</p>`;
+                } else {
+                    userElement.innerHTML = `<p>Không nhận diện được sinh viên - Distance: ${user.distance}</p>`;
                 }
+                recognizedPersonsList.appendChild(userElement);
+            });
+
+            if (unrecognizedCount > 0) {
+                unrecognizedCountDiv.innerHTML = `<p>Số lượng sinh viên không nhận diện được: ${unrecognizedCount}</p>`;
             } else {
-                recognizedPerson.textContent = "No person recognized.";
-                recognizedDistance.textContent = "";
-                resultSection.style.display = 'block';
+                unrecognizedCountDiv.innerHTML = '';
             }
+
+            document.getElementById('resultSection').style.display = 'block';
         }
 
-
-        // Initial camera state
         stopCamera();
     </script>
-
 </body>
+
+
+
+
 
 </html>

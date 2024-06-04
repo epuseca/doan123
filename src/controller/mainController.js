@@ -73,7 +73,7 @@ module.exports = {
             khoa: user.khoa,
             lop: user.lop,
             idCtdt: user.idCtdt
-        }, 'namdv', { expiresIn: '1h' });
+        }, 'namdv', { expiresIn: '3h' });
 
         res.cookie('token', token, { httpOnly: true });
         return res.status(200).json({ message: 'Login successful', token });
