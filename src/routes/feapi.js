@@ -8,7 +8,7 @@ const { getAllCTDT, searchCTDTByName, putEditCTDT, postNewCTDT, deleteACTDT }
     = require('../controller/ctdtController')
 const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses }
     = require('../controller/courseController')
-const { getClass }
+const { getClass, postClass, putClass, deteteClass }
     = require('../controller/classController')
 const { getClassExams, searchClassExamsByName, getStudentByClassExam, deteteStudent }
     = require('../controller/classExamController')
@@ -72,6 +72,9 @@ routerAPI.delete('/courses/:idCourse', deteteCourses)
 
 //Lớp học
 routerAPI.get('/class', middleware.verifyToken, getClass)
+routerAPI.post('/class', postClass)
+routerAPI.put('/class/:idClass', putClass)
+routerAPI.delete('/class/:idClass', deteteClass)
 
 //Lớp thi
 routerAPI.get('/classExams', middleware.verifyToken, getClassExams)

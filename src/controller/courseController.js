@@ -48,7 +48,7 @@ module.exports = {
   getClassbyCourse: async (req, res) => {
     const CourseID = req.params.idCourse;
     let results = await Class.find({ idCourse: CourseID }).exec();
-    return res.render('build/pages/class_management.ejs', { listClassByCourse: results })
+    return res.render('build/pages/class_management.ejs', { listClass: results }) //listClassByCourse: results
   },
   postCourses: async (req, res) => {
     const newData = req.body;

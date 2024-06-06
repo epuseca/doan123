@@ -248,33 +248,34 @@
                         <!-- <li class="flex items-center">
                       <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
                     </li> -->
-                    <li class="flex items-center">
-                        <a href="/" id="logoutLink" class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
-                          <i class="fa fa-user sm:mr-1"></i>
-                          <span class="hidden sm:inline">Logout</span>
-                        </a>
-                      </li>
-                      <script>
-                        document.getElementById('logoutLink').addEventListener('click', async function (event) {
-                          event.preventDefault();
-                      
-                          try {
-                            const response = await fetch('/logout', {
-                              method: 'GET',
-                              credentials: 'same-origin'
+                        <li class="flex items-center">
+                            <a href="/" id="logoutLink"
+                                class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
+                                <i class="fa fa-user sm:mr-1"></i>
+                                <span class="hidden sm:inline">Logout</span>
+                            </a>
+                        </li>
+                        <script>
+                            document.getElementById('logoutLink').addEventListener('click', async function (event) {
+                                event.preventDefault();
+
+                                try {
+                                    const response = await fetch('/logout', {
+                                        method: 'GET',
+                                        credentials: 'same-origin'
+                                    });
+
+                                    if (response.ok) {
+                                        window.location.href = '/';
+                                    } else {
+                                        alert('Failed to log out. Please try again.');
+                                    }
+                                } catch (error) {
+                                    console.error('Error during logout:', error);
+                                    alert('An error occurred during logout. Please try again.');
+                                }
                             });
-                      
-                            if (response.ok) {
-                              window.location.href = '/';
-                            } else {
-                              alert('Failed to log out. Please try again.');
-                            }
-                          } catch (error) {
-                            console.error('Error during logout:', error);
-                            alert('An error occurred during logout. Please try again.');
-                          }
-                        });
-                      </script>
+                        </script>
                         <li class="flex items-center pl-4 xl:hidden">
                             <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand"
                                 sidenav-trigger>
@@ -413,30 +414,51 @@
 
                         <div class="flex flex-wrap">
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <input type="text" placeholder="Tìm mã lớp học"
+                                <input id="search-input-code" type="text" placeholder="Tìm mã lớp học"
+                                    value="<%= typeof searchCode !== 'undefined' ? searchCode : '' %>"
                                     class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
                             </div>
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <!-- Nội dung cột 2 -->
-                                <input type="text" placeholder="Tìm tên lớp học"
+                                <input id="search-input-name" type="text" placeholder="Tìm tên lớp học"
+                                    value="<%= typeof searchName !== 'undefined' ? searchName : '' %>"
                                     class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
                             </div>
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
                                 <div class="flex flex-row">
-                                    <button type="button"
+                                    <button id="search-button" type="button"
                                         class="inline-flex items-center px-2 py-2.5 mr-4 font-bold text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-blue-500 to-violet-500 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md">
                                         <img src="../img/ic/ic_search.svg" class="w-5 h-5 text-white" alt="Icon">
                                         <span>Tìm kiếm</span>
                                     </button>
-                                    <button type="button"
+                                    <button id="reset-button" type="button"
                                         class="inline-flex items-center px-2 py-2.5 font-bold text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-red-600 to-orange-600 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md">
                                         <img src="../img/ic/ic_search.svg" class="w-5 h-5 text-white" alt="Icon">
                                         <span>Reset</span>
                                     </button>
                                 </div>
                             </div>
-
                         </div>
+                        <script>
+                            document.getElementById('search-button').addEventListener('click', function () {
+                                const searchInputCode = document.querySelector('#search-input-code').value;
+                                const searchInputName = document.querySelector('#search-input-name').value;
+                                const url = new URL(window.location.href);
+                                url.pathname = '/class';
+                                url.searchParams.set('page', 1);  // Thiết lập trang mặc định là 1
+                                if (searchInputCode) {
+                                    url.searchParams.set('mhp', searchInputCode);
+                                }
+                                if (searchInputName) {
+                                    url.searchParams.set('thp', searchInputName);
+                                }
+                                window.location.href = url.toString();
+                            });
+
+                            document.getElementById('reset-button').addEventListener('click', function () {
+                                window.location.href = '/class?page=1';
+                            });
+                        </script>
+
                         <div class="flex-auto px-0 pt-0 pb-2">
                             <div class="p-0 overflow-x-auto">
                                 <table
@@ -470,7 +492,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% let counter=1; listClassByCourse.forEach(function(classes){ %>
+                                        <% let counter=1; listClass.forEach(function(classes){ %>
                                             <tr>
                                                 <td
                                                     class="px-6 py-3 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
@@ -539,12 +561,12 @@
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_edit()">
+                                                            onclick="showDialog_edit('<%= classes.name %>','<%= classes.malop %>','<%= classes.phongHoc %>','<%= classes.idStudents.length %>','<%= classes.maxStudent %>','<%= classes.startTime %>','<%= classes.endTime %>','<%= classes.thu %>', '<%= classes._id %>')">
                                                             <img src="../img/ic/ic_edit.svg" class="w-4 h-4" alt="Icon">
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_delete()">
+                                                            onclick="showDialog_delete('<%= classes._id %>')">
                                                             <img src="../img/ic/ic_delete.svg" class="w-4 h-4"
                                                                 alt="Icon">
                                                         </button>
@@ -564,7 +586,66 @@
             </div>
         </div>
         <!-- end cards -->
+        <div style="text-align:center; margin-top: 20px;">
 
+            <style>
+                .pagination {
+                    display: inline-block;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .pagination a,
+                .pagination span {
+                    color: #6a0dad;
+                    /* Màu tím chủ đạo */
+                    float: left;
+                    padding: 8px 16px;
+                    text-decoration: none;
+                    transition: background-color 0.3s;
+                    border: 1px solid #ddd;
+                    margin: 0 4px;
+                    border-radius: 4px;
+                }
+
+                .pagination a:hover {
+                    background-color: #ddd;
+                }
+
+                .pagination a.active {
+                    background-color: #6a0dad;
+                    color: white;
+                    border: 1px solid #6a0dad;
+                }
+            </style>
+
+            <div class="pagination">
+                <% if (typeof totalPages !=='undefined' && totalPages> 1) { %>
+                    <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>&mhp=<%= searchCode %>&thp=<%= searchName %>"
+                        class="pagination-link <%= currentPage === 1 ? 'disabled' : '' %>">Previous</a>
+                    <% for (let i=1; i <=totalPages; i++) { %>
+                        <a href="?page=<%= i %>&mhp=<%= searchCode %>&thp=<%= searchName %>"
+                            class="pagination-link <%= currentPage === i ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                        <% } %>
+                            <% if (currentPage < totalPages) { %>
+                                <a href="?page=<%= currentPage + 1 %>&mhp=<%= searchCode %>&thp=<%= searchName %>"
+                                    class="pagination-link">Next</a>
+                                <% } else { %>
+                                    <span class="pagination-link">Next</span>
+                                    <% } %>
+                                        <% } %>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const activeLink = document.querySelector('.pagination-link.active');
+                    if (activeLink) {
+                        activeLink.style.fontWeight = 'bold';
+                    }
+                });
+            </script>
+        </div>
     </main>
 
     <!-- -->
@@ -614,7 +695,7 @@
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
                             Phòng học</label>
-                        <input value="" readonly type="text" id="phonghoc"
+                        <input value="" readonly type="text" id="phongHoc"
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
@@ -662,13 +743,13 @@
         </div>
     </div>
     <script>
-        function showDialog_view(tenhocphan, malop, phongHoc, soluong, maxStudent, startTime, endTime, thu) {
+        function showDialog_view(name, malop, phongHoc, soluong, maxStudent, startTime, endTime, thu) {
             let dialog = document.getElementById("dialog_view");
 
             // Populate the dialog with course information
-            document.getElementById("name").value = tenhocphan;
+            document.getElementById("name").value = name;
             document.getElementById("malop").value = malop;
-            document.getElementById("phonghoc").value = phongHoc;
+            document.getElementById("phongHoc").value = phongHoc;
             document.getElementById("soluong").value = soluong;
             document.getElementById("maxStudent").value = maxStudent;
             document.getElementById("startTime").value = startTime;
@@ -684,18 +765,18 @@
     </script>
 
     <div id="dialog_edit" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
-            hidden z-50">
+hidden z-50">
         <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500">
 
         </div>
-        <div class="bg-white shadow-md p-8 w-8/12 h-0.9 z-50 overflow-y-auto">
+        <div class="bg-white shadow-md p-8 w-0.75 h-3/4 z-50 overflow-y-auto">
 
             <div class="flex items-center justify-between md:p-5 rounded-t dark:border-gray-600">
                 <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">
-                    Thông tin sinh viên
+                    Thông tin lớp học
                 </h4>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
-                dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_edit()">
+    dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_edit()">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -707,199 +788,267 @@
             <hr
                 class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
 
-            <div class="flex flex-wrap">
-                <div class="">
-                    <div class="mx-6 mt-6 w-75 h-75 border-1 rounded-1.8 border-gray-300">
-                        <img class="w-50 h-75 rounded" src="../img/marie.jpg" alt="">
-                    </div>
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Mã số sinh viên</label>
-                            <input value="20202020" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                SĐT</label>
-                            <input value="0123456789" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="flex-grow pt-6">
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Họ và tên</label>
-                            <input value="Nguyễn Văn A" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Năm vào trường</label>
-                            <input value="2020" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Bậc đào tạo</label>
-                            <input value="Đại học đại trà" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Chương trình</label>
-                            <input value="Kỹ thuật điện tử viễn thông" type="text" readonly
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Khoa viện quản lý</label>
-                            <input value="Trường Điện - Điện tử" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Giới tính</label>
-                            <input value="Nam" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Lớp</label>
-                            <input value="Điện tử 01-K65" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                    <div class="w-full max-w-full px-6 pt-2 shrink-0 md:flex-0">
-                        <div class="">
-                            <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                                Email</label>
-                            <input value="a.nv202020@gmail.com" type="text"
-                                class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <hr
-                class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
-
-            <h5 class="text-slate-800 text-left mt-2 ml-6 flex-grow">
-                Thông tin cá nhân
-            </h5>
-
             <div class="flex flex-wrap -mx-3 px-6">
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Dân tộc</label>
-                        <input value="Kinh" type="text" name="username"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Tên học phần</label>
+                        <input name="name" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Tôn giáo</label>
-                        <input value="Không" type="email" name="email"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Mã lớp</label>
+                        <input name="malop" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Năm TN cấp 3</label>
-                        <input value="2020" type="text" name="first name"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Phòng học</label>
+                        <input name="phongHoc" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Trường THPT</label>
-                        <input value="Trường trung học THPT-abcxyz" type="text" name="last name"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Số lượng</label>
+                        <input name="soluong" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Số lượng tối đa</label>
+                        <input name="maxStudent" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Thời gian bắt đầu</label>
+                        <input name="startTime" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Thời gian kết thúc</label>
+                        <input name="endTime" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Thứ</label>
+                        <input name="thu" value="" type="text"
+                            class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
             </div>
-
-            <div class="flex flex-wrap -mx-3 px-6">
-                <div class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
-                    <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Địa chỉ</label>
-                        <input value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" name="address"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                    </div>
-                </div>
-                <div class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
-                    <div class="mb-4">
-                        <label class="inline-block mb-2 ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Hộ khẩu</label>
-                        <input value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text" name="address"
-                            class="bg-white focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                    </div>
-                </div>
-
-            </div>
-            <hr
-                class="h-px mt-2 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
+            <input name="id" type="hidden" value="">
             <button id="button_edit"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
                 Thay đổi
             </button>
+            <script>
+                document.getElementById('button_edit').addEventListener('click', async function () {
+                    const id = document.querySelector("#dialog_edit input[name='id']").value;
+                    const newName = document.querySelector("#dialog_edit input[name='name']").value;
+                    const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
+                    const newphongHoc = document.querySelector("#dialog_edit input[name='phongHoc']").value;
+                    const newsoluong = document.querySelector("#dialog_edit input[name='soluong']").value;
+                    const newmaxStudent = document.querySelector("#dialog_edit input[name='maxStudent']").value;
+                    const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
+                    const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
+                    const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
+                    try {
+                        // Gửi yêu cầu cập nhật dữ liệu đến máy chủ
+                        const response = await fetch(`/class/${id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+
+                                name: newName,
+                                malop: newmalop,
+                                phongHoc: newphongHoc,
+                                soluong: newsoluong,
+                                maxStudent: newmaxStudent,
+                                startTime: newstartTime,
+                                endTime: newendTime,
+                                thu: newthu
+                            })
+                        });
+
+                        if (response.ok) {
+                            // Nếu cập nhật thành công, làm gì đó (ví dụ: ẩn hộp thoại)
+                            hideDialog_edit();
+                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
+                            window.location.reload();
+                        } else {
+                            // Xử lý khi không cập nhật được dữ liệu
+                            console.error('Failed to update data');
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            </script>
             <button id="button_add"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
                 Thêm mới
             </button>
+            <div id="dialog_edit" class="hidden">
 
+                <input type="text" name="name">
+                <input type="text" name="malop">
+                <input type="text" name="phongHoc">
+                <input type="text" name="soluong">
+                <input type="text" name="maxStudent">
+                <input type="text" name="startTime">
+                <input type="text" name="endTime">
+                <input type="text" name="thu">
+                <input type="hidden" name="id">
+                <button id="button_edit" class="hidden">Chỉnh sửa</button>
 
+            </div>
         </div>
     </div>
     <script>
-        function showDialog_edit() {
+        let isAddButtonEventBound = false;
+
+        function showDialog_edit(name, malop, phongHoc, soluong, maxStudent, startTime, endTime, thu, id) {
+
             let dialog = document.getElementById("dialog_edit");
-            dialog.classList.remove('hidden')
-            document.getElementById("button_add").classList.add('hidden')
-            document.getElementById("button_edit").classList.remove('hidden')
+            dialog.classList.remove('hidden');
+
+            // Get the input elements in the dialog
+
+            let nameInput = document.querySelector("#dialog_edit input[name='name']");
+            let malopInput = document.querySelector("#dialog_edit input[name='malop']");
+            let phongHocInput = document.querySelector("#dialog_edit input[name='phongHoc']");
+            let soluongInput = document.querySelector("#dialog_edit input[name='soluong']");
+            let maxStudentInput = document.querySelector("#dialog_edit input[name='maxStudent']");
+            let startTimeInput = document.querySelector("#dialog_edit input[name='startTime']");
+            let endTimeInput = document.querySelector("#dialog_edit input[name='endTime']");
+            let thuInput = document.querySelector("#dialog_edit input[name='thu']");
+            let idInput = document.querySelector("#dialog_edit input[name='id']");
+
+
+            // Fill in the input fields with data
+
+            nameInput.value = name;
+            malopInput.value = malop;
+            phongHocInput.value = phongHoc;
+            soluongInput.value = soluong;
+            maxStudentInput.value = maxStudent;
+            startTimeInput.value = startTime;
+            endTimeInput.value = endTime;
+            thuInput.value = thu;
+            idInput.value = id;
+
+
+            // Display the edit button and hide the add button
+            document.getElementById("button_edit").classList.remove('hidden');
+            document.getElementById("button_add").classList.add('hidden');
         }
-        function showDialog_add() {
-            let dialog = document.getElementById("dialog_edit");
-            dialog.classList.remove('hidden')
-            document.getElementById("button_edit").classList.add('hidden')
-            document.getElementById("button_add").classList.remove('hidden')
-        }
+
         function hideDialog_edit() {
             let dialog = document.getElementById("dialog_edit");
-            dialog.classList.add('hidden')
+            dialog.classList.add('hidden');
+        }
+
+        ////////////////////////////////////////////////////
+
+        function showDialog_add() {
+            let dialog = document.getElementById("dialog_edit");
+            dialog.classList.remove('hidden');
+
+            // Reset các giá trị input
+
+            document.querySelector("#dialog_edit input[name='name']").value = "";
+            document.querySelector("#dialog_edit input[name='malop']").value = "";
+            document.querySelector("#dialog_edit input[name='phongHoc']").value = "";
+            document.querySelector("#dialog_edit input[name='soluong']").value = "";
+            document.querySelector("#dialog_edit input[name='maxStudent']").value = "";
+            document.querySelector("#dialog_edit input[name='startTime']").value = "";
+            document.querySelector("#dialog_edit input[name='endTime']").value = "";
+            document.querySelector("#dialog_edit input[name='thu']").value = "";
+            document.querySelector("#dialog_edit input[name='id']").value = "";
+
+            // Hiển thị nút thêm mới và ẩn nút chỉnh sửa
+            document.getElementById("button_edit").classList.add('hidden');
+            document.getElementById("button_add").classList.remove('hidden');
+
+
+            // Gán sự kiện click cho nút "Thêm mới" nếu chưa được gán
+            if (!isAddButtonEventBound) {
+                document.getElementById("button_add").addEventListener('click', addNewData);
+                isAddButtonEventBound = true;
+            }
+        }
+
+
+
+
+        function addNewData() {
+
+            const newName = document.querySelector("#dialog_edit input[name='name']").value;
+            const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
+            const newphongHoc = document.querySelector("#dialog_edit input[name='phongHoc']").value;
+            const newsoluong = document.querySelector("#dialog_edit input[name='soluong']").value;
+            const newmaxStudent = document.querySelector("#dialog_edit input[name='maxStudent']").value;
+            const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
+            const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
+            const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
+
+            try {
+                // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
+                const response = fetch('/class', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+
+                        name: newName,
+                        malop: newmalop,
+                        phongHoc: newphongHoc,
+                        soluong: newsoluong,
+                        maxStudent: newmaxStudent,
+                        startTime: newstartTime,
+                        endTime: newendTime,
+                        thu: newthu
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Nếu thêm mới thành công, làm gì đó (ví dụ: ẩn hộp thoại)
+                            hideDialog_edit();
+                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
+                            window.location.reload();
+                        } else {
+                            // Xử lý khi không thêm mới được dữ liệu
+                            console.error('Failed to add new data');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     </script>
+
 
     <div id="dialog_delete" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
             hidden z-50">
@@ -910,7 +1059,7 @@
 
             <div class="flex items-center justify-between md:p-5 rounded-t dark:border-gray-600">
                 <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">
-                    Xóa sinh viên
+                    Xóa lớp học
                 </h4>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
                 dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_delete()">
@@ -927,11 +1076,12 @@
 
             <div class="flex flex-wrap">
                 <h6 class="px-6 text-slate-800 text-sm">
-                    Bạn có chắc chắn xóa sinh viên này không ?
+                    Bạn có chắc chắn xóa lớp này không ?
                 </h6>
             </div>
-
-            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
+            <input name="deleteId" type="hidden" value="">
+            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                onclick="deleteData()">
                 Xóa
             </button>
 
@@ -941,13 +1091,42 @@
         </div>
     </div>
     <script>
-        function showDialog_delete() {
-            let dialog = document.getElementById("dialog_delete");
-            dialog.classList.remove('hidden')
+        function deleteData() {
+            const idClass = document.querySelector("#dialog_delete input[name='deleteId']").value;
+
+            try {
+                // Gửi yêu cầu xóa dữ liệu đến máy chủ
+                fetch(`/class/${idClass}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Nếu xóa thành công, làm gì đó (ví dụ: ẩn hộp thoại)
+                            hideDialog_delete();
+                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
+                            window.location.reload();
+                        } else {
+                            // Xử lý khi không xóa được dữ liệu
+                            console.error('Failed to delete data');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
+
+        function showDialog_delete(idClass) {
+            let dialog = document.getElementById("dialog_delete");
+            dialog.classList.remove('hidden');
+
+            // Truyền ID vào input ẩn trong hộp thoại xóa
+            document.querySelector("#dialog_delete input[name='deleteId']").value = idClass;
+        }
+
         function hideDialog_delete() {
             let dialog = document.getElementById("dialog_delete");
-            dialog.classList.add('hidden')
+            dialog.classList.add('hidden');
         }
     </script>
 
