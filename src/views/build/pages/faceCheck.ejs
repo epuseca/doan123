@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-        
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -24,16 +23,33 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left-column {
+            align-items: flex-start;
         }
 
         h1 {
             font-size: 24px;
+            color: #5E72E4;
+            /* Primary purple color */
             margin-bottom: 20px;
         }
 
         form {
+            width: 100%;
             margin-bottom: 20px;
         }
 
@@ -48,7 +64,8 @@
 
         input[type="submit"],
         button {
-            background-color: #28a745;
+            background-color: #5E72E4;
+            /* Primary purple color */
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -56,28 +73,35 @@
             cursor: pointer;
             font-size: 16px;
             margin: 10px 0;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover,
         button:hover {
-            background-color: #218838;
+            background-color: #5E72E4;
+            /* Darker purple color */
         }
 
         video,
         canvas,
         img {
             margin-top: 10px;
+            max-width: 100%;
             display: none;
         }
 
         .controls {
             margin-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
 
         .spinner {
             display: none;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border-top: 4px solid #5E72E4;
+            /* Primary purple color */
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -96,7 +120,7 @@
         }
 
         .back-button {
-            background-color: #007bff;
+            background-color: #5E72E4;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -109,6 +133,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background-color 0.3s ease;
         }
 
         .back-button:hover {
@@ -118,40 +143,84 @@
         .back-button i {
             margin-right: 8px;
         }
+
+        #recognizedPhoto {
+            display: none;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #recognizedPhoto.show {
+            display: block;
+            transform: scale(1.05);
+        }
+
+        #resultSection {
+            width: 100%;
+            text-align: center;
+        }
+
+        #resultSection h2 {
+            margin-bottom: 20px;
+            color: #6a1b9a;
+            /* Primary purple color */
+        }
+
+        #recognizedPersonsList,
+        #unrecognizedCount {
+            text-align: left;
+        }
+
+        .notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffdddd;
+            border-left: 6px solid #f44336;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
 <body>
     <div class="notifications"></div>
     <div class="container">
-        <h1>Face Recognition System</h1>
-        
-        <button class="back-button" onclick="window.location.href='/classExams'"><i
-                class="fas fa-arrow-left"></i></button>
+        <div class="left-column">
+            <h1>Face Recognition System</h1>
+            <button class="back-button" onclick="window.location.href='/classExams'"><i
+                    class="fas fa-arrow-left"></i>Back</button>
 
-        <!-- Form for uploading image -->
-        <form id="uploadForm" action="/check-face/<%=idClassExam%>" method="POST" encType="multipart/form-data">
-            <input type="file" id="fileInput" name="File1" />
-            <input type="submit" value="Upload Image" />
-        </form>
-        <!-- Video and Canvas elements -->
-        <video id="video" width="320" height="240" autoplay></video>
-        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-        <!-- Image element to display captured photo -->
-        <img id="photo" width="320" height="240">
-        <!-- Controls buttons -->
-        <div class="controls">
-            <button id="toggleCamera">Turn On Camera</button>
-            <button id="capture">Capture</button>
-            <button id="retake" style="display: none;">Retake</button>
+            <!-- Form for uploading image -->
+            <form id="uploadForm" action="/check-face/<%=idClassExam%>" method="POST" encType="multipart/form-data">
+                <input type="file" id="fileInput" name="File1" />
+                <input type="submit" value="Upload Image" />
+            </form>
+            <!-- Video and Canvas elements -->
+            <video id="video" width="480" height="320" autoplay></video>
+            <canvas id="canvas" width="480" height="320" style="display:none;"></canvas>
+            <!-- Image element to display captured photo -->
+            <img id="photo" width="480" height="320">
+            <!-- Controls buttons -->
+            <div class="controls">
+                <button id="toggleCamera">Turn On Camera</button>
+                <button id="capture">Capture</button>
+                <button id="retake" style="display: none;">Retake</button>
+            </div>
+            <!-- Spinner element -->
+            <div id="spinner" class="spinner"></div>
         </div>
-        <!-- Spinner element -->
-        <div id="spinner" class="spinner"></div>
-        <!-- Result section to display recognized persons -->
-        <div id="resultSection" style="display: none;">
-            <h2>Recognized Persons</h2>
-            <div id="recognizedPersonsList"></div>
-            <div id="unrecognizedCount"></div>
+        <div class="right-column">
+            <!-- Image element to display recognized photo -->
+            <img id="recognizedPhoto" width="480" height="360">
+            <!-- Result section to display recognized persons -->
+            <div id="resultSection" style="display: none;">
+                <h2>Recognized Persons</h2>
+                <div id="recognizedPersonsList"></div>
+                <div id="unrecognizedCount"></div>
+            </div>
         </div>
     </div>
 
@@ -160,6 +229,7 @@
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
         const photo = document.getElementById('photo');
+        const recognizedPhoto = document.getElementById('recognizedPhoto');
         const captureButton = document.getElementById('capture');
         const retakeButton = document.getElementById('retake');
         const fileInput = document.getElementById('fileInput');
@@ -212,6 +282,7 @@
             video.style.display = 'block';
             canvas.style.display = 'none';
             photo.style.display = 'none';
+            recognizedPhoto.style.display = 'none';
             captureButton.style.display = 'inline-block';
             retakeButton.style.display = 'none';
         });
@@ -239,8 +310,15 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("Data received: ", data); // Thêm dòng này để kiểm tra dữ liệu nhận được
+                    console.log("Data received: ", data);
 
+                    // Display the saved image with detected faces
+                    recognizedPhoto.src = data.outputImagePath.replace(/^.*?public/, ''); // Loại bỏ phần đường dẫn tuyệt đối
+
+                    recognizedPhoto.style.display = 'block';
+                    photo.style.display = 'none';
+
+                    // Update recognized persons list
                     updateRecognizedPersonsList(data.recognizedUsers, data.unrecognizedCount);
                 } else {
                     console.error("Error:", response.statusText);
@@ -258,7 +336,7 @@
             recognizedUsers.forEach(user => {
                 const userElement = document.createElement('div');
                 if (user.recognized) {
-                    userElement.innerHTML = `<p>Điểm danh thành công: ${user.name} (MSSV: ${user.mssv}) - Distance: ${user.distance}</p>`;
+                    userElement.innerHTML = `<p>Success: ${user.name} : ${user.mssv} - Distance: ${user.distance}</p>`;
                 } else {
                     userElement.innerHTML = `<p>Không nhận diện được sinh viên - Distance: ${user.distance}</p>`;
                 }
@@ -274,12 +352,9 @@
             document.getElementById('resultSection').style.display = 'block';
         }
 
+
         stopCamera();
     </script>
 </body>
-
-
-
-
 
 </html>

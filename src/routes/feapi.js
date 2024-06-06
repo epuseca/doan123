@@ -10,7 +10,7 @@ const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses }
     = require('../controller/courseController')
 const { getClass }
     = require('../controller/classController')
-const { getClassExams, searchClassExamsByName, getStudentByClassExam }
+const { getClassExams, searchClassExamsByName, getStudentByClassExam, deteteStudent }
     = require('../controller/classExamController')
 const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
 const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent } = require('../controller/studentController')
@@ -77,6 +77,7 @@ routerAPI.get('/class', middleware.verifyToken, getClass)
 routerAPI.get('/classExams', middleware.verifyToken, getClassExams)
 routerAPI.post('/classExams/search', middleware.verifyToken, searchClassExamsByName);
 routerAPI.get('/classExamsStudents/:idClassExam', middleware.verifyToken, getStudentByClassExam);
+routerAPI.delete('/classExamsStudents/:idStudentAttend', deteteStudent)
 
 //Điểm danh lớp thi
 const faceController = require('../controller/faceController');
